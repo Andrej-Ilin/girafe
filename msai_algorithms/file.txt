@@ -1,7 +1,2 @@
-5
-0 100 Kermit
-1 0 Pepe
-2 999999999 Knuth
-3 1000000000 Dijkstra
-4 100000000 Kormen
-
+3
+0 2 1
