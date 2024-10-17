@@ -1,6 +1,6 @@
 import random
 
-with open('./girafe/msai_algorithms/file.txt', 'r') as f:
+with open('./girafe/msai_algorithms/input.txt', 'r') as f:
     data = f.read().strip().split('\n')
 
 def quickSort(x, l=0, r=None, reverse=False):
