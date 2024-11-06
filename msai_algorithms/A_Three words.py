@@ -17,6 +17,7 @@ def lis(x, N):
         # Use binary search to find the smallest index l* such that d[l*] >= x[i]
         l_star = bisect_left(d, x[i])
         # Update d[l_star] with x[i]
+        # print(d)
         d[l_star] = x[i]
 
     # Find the largest index l where d[l] is less than infinity
