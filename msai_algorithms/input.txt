@@ -1,7 +1,2 @@
-6
-+ 0 10
-+ 1 5
-+ 2 7
--
--
--
+abcdefgh
+fghabcde
