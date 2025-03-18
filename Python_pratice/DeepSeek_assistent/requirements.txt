@@ -1,0 +1,8 @@
+mss
+pytesseract
+numpy
+requests
+json5
+pyttsx3
+keyboard
+opencv-python-headless
