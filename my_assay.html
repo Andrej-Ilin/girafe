@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modeling Decision Making in Economics: What's Wrong with It?</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 90%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            animation: slideIn 0.5s ease-in-out;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            font-size: 2.5em;
+            margin-bottom: 30px;
+            text-align: center;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        h2 {
+            font-size: 2em;
+            margin-bottom: 25px;
+            color: #ffd93d;
+            border-bottom: 2px solid #ffd93d;
+            padding-bottom: 10px;
+        }
+
+        h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #74b9ff;
+        }
+
+        p, li {
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        ul {
+            padding-left: 25px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, rgba(255, 107, 107, 0.3) 0%, rgba(78, 205, 196, 0.3) 100%);
+            padding: 3px 8px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 15px;
+            z-index: 1000;
+        }
+
+        .btn {
+            padding: 12px 25px;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 20px;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .example-box {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+            border-left: 4px solid #ffd93d;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .comparison-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .traditional {
+            border-left: 4px solid #ff6b6b;
+        }
+
+        .behavioral {
+            border-left: 4px solid #4ecdc4;
+        }
+
+        .chart-placeholder {
+            background: rgba(255, 255, 255, 0.1);
+            height: 200px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2em;
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <div class="slide-counter">
+            <span id="current-slide">1</span> / <span id="total-slides">12</span>
+        </div>
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Modeling Decision Making in Economics: What's Wrong with It?</h1>
+            <div style="text-align: center; margin-top: 50px;">
+                <h3>Критический анализ традиционных экономических моделей принятия решений</h3>
+                <p style="margin-top: 30px; font-size: 1.2em;">Исследование ограничений рационального выбора и альтернативные подходы</p>
+            </div>
+            <div class="example-box" style="margin-top: 40px;">
+                <p><strong>Ключевой вопрос:</strong> Почему люди в 2008 году продолжали платить ипотеку за дома, стоившие меньше долга?</p>
+            </div>
+        </div>
+
+        <!-- Slide 2: Problem Statement -->
+        <div class="slide">
+            <h2>Проблема исследования</h2>
+            <h3>Традиционные экономические модели основаны на:</h3>
+            <ul>
+                <li><span class="highlight">Рациональных агентах</span> с неограниченными когнитивными способностями</li>
+                <li><span class="highlight">Полной информации</span> о всех альтернативах</li>
+                <li><span class="highlight">Максимизации полезности</span> при всех решениях</li>
+                <li><span class="highlight">Стабильных предпочтениях</span>, независимых от контекста</li>
+            </ul>
+            <div class="example-box">
+                <h3>Но реальность показывает:</h3>
+                <p>Люди систематически отклоняются от предсказаний этих моделей, принимая решения под влиянием эмоций, когнитивных ограничений и социального контекста</p>
+            </div>
+        </div>
+
+        <!-- Slide 3: Research Question -->
+        <div class="slide">
+            <h2>Исследовательский вопрос</h2>
+            <div class="example-box">
+                <h3>Центральный аргумент:</h3>
+                <p>Современные экономические модели принятия решений <span class="highlight">фундаментально порочны</span>, поскольку они упрощают человеческое познание, игнорируют психологические предрассудки и не учитывают контекстуальные факторы</p>
+            </div>
+            <h3>Ключевые вопросы:</h3>
+            <ul>
+                <li>Как ограничения традиционных моделей влияют на понимание экономического поведения?</li>
+                <li>Какие альтернативные подходы лучше отражают сложность человеческих решений?</li>
+                <li>Каковы последствия для экономической политики?</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Traditional Models -->
+        <div class="slide">
+            <h2>Традиционные модели</h2>
+            <div class="comparison-grid">
+                <div class="comparison-item traditional">
+                    <h3>Теория рационального выбора</h3>
+                    <ul>
+                        <li>Homo economicus</li>
+                        <li>Стабильные предпочтения</li>
+                        <li>Максимизация полезности</li>
+                    </ul>
+                </div>
+                <div class="comparison-item traditional">
+                    <h3>Теория ожидаемой полезности</h3>
+                    <ul>
+                        <li>Математическая формализация</li>
+                        <li>Субъективные вероятности</li>
+                        <li>Аксиомы полноты и транзитивности</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="example-box">
+                <p><strong>Основное предположение:</strong> Люди обладают неограниченной способностью обрабатывать информацию и всегда выбирают оптимальную альтернативу</p>
+            </div>
+        </div>
+
+        <!-- Slide 5: Alternative Approaches -->
+        <div class="slide">
+            <h2>Альтернативные подходы</h2>
+            <div class="comparison-grid">
+                <div class="comparison-item behavioral">
+                    <h3>Поведенческая экономика</h3>
+                    <ul>
+                        <li>Канеман и Тверски</li>
+                        <li>Когнитивные предрассудки</li>
+                        <li>Роль эмоций</li>
+                    </ul>
+                </div>
+                <div class="comparison-item behavioral">
+                    <h3>Ограниченная рациональность</h3>
+                    <ul>
+                        <li>Герберт Саймон</li>
+                        <li>Концепция "satisficing"</li>
+                        <li>Когнитивные ограничения</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="comparison-grid">
+                <div class="comparison-item behavioral">
+                    <h3>Теория перспектив</h3>
+                    <ul>
+                        <li>Референтные точки</li>
+                        <li>Асимметрия потерь/выгод</li>
+                        <li>Искажение вероятностей</li>
+                    </ul>
+                </div>
+                <div class="comparison-item behavioral">
+                    <h3>Нейроэкономика</h3>
+                    <ul>
+                        <li>Мозговые механизмы</li>
+                        <li>Биологические основы</li>
+                        <li>Нейровизуализация</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Cognitive Limitations -->
+        <div class="slide">
+            <h2>Когнитивные ограничения</h2>
+            <h3>1. Ограничения обработки информации</h3>
+            <ul>
+                <li><span class="highlight">"Магическое число семь"</span> Миллера - ограничения рабочей памяти</li>
+                <li><span class="highlight">Ограниченная рациональность</span> Саймона - satisficing вместо оптимизации</li>
+                <li><span class="highlight">Селективное внимание</span> - невозможность одновременной обработки всей информации</li>
+            </ul>
+            
+            <h3>2. Эвристики и предрассудки</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <strong>Эвристика доступности:</strong> Переоценка легко вспоминаемой информации
+                </div>
+                <div class="comparison-item">
+                    <strong>Эффект якоря:</strong> Влияние первоначальных референтных точек
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Emotional and Social Factors -->
+        <div class="slide">
+            <h2>Эмоциональные и социальные факторы</h2>
+            <h3>1. Роль эмоций в принятии решений</h3>
+            <ul>
+                <li><span class="highlight">Асимметрия потерь</span> - потери воспринимаются в ~2 раза сильнее выгод</li>
+                <li><span class="highlight">Ошибки эмоционального прогнозирования</span> - неточная оценка будущих состояний</li>
+                <li><span class="highlight">Адаптация</span> - снижение эмоционального воздействия со временем</li>
+            </ul>
+            
+            <h3>2. Социальный контекст и справедливость</h3>
+            <div class="example-box">
+                <p><strong>Игра "Ультиматум":</strong> Люди отвергают "несправедливые" предложения, даже когда это экономически невыгодно</p>
+                <p><strong>Межкультурные различия:</strong> Значительная вариация в кооперации и доверии между культурами</p>
+            </div>
+        </div>
+
+        <!-- Slide 8: Temporal Inconsistencies -->
+        <div class="slide">
+            <h2>Временные и контекстуальные несоответствия</h2>
+            <h3>1. Аномалии временных предпочтений</h3>
+            <ul>
+                <li><span class="highlight">Гиперболическое дисконтирование</span> - предрассудок настоящего</li>
+                <li><span class="highlight">Ошибка планирования</span> - систематическая недооценка времени и затрат</li>
+            </ul>
+            
+            <h3>2. Эффекты фрейминга</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item">
+                    <strong>Зависимость от референтной точки:</strong> Одинаковые исходы оцениваются по-разному
+                </div>
+                <div class="comparison-item">
+                    <strong>Ментальный учет:</strong> Деньги обрабатываются по-разному в зависимости от источника
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Пример:</strong> Люди могут иметь долги по кредитной карте под высокий процент, одновременно держа сбережения под низкий процент</p>
+            </div>
+        </div>
+
+        <!-- Slide 9: Market Level Implications -->
+        <div class="slide">
+            <h2>Последствия на уровне рынка</h2>
+            <h3>1. Аномалии цен активов</h3>
+            <ul>
+                <li><span class="highlight">Формирование пузырей</span> - отклонение цен от фундаментальных значений</li>
+                <li><span class="highlight">Эффекты импульса и реверсии</span> - предсказуемые паттерны доходности</li>
+            </ul>
+            
+            <div class="chart-placeholder">
+                Примеры: Dot-com пузырь 1990-х, жилищный пузырь 2000-х
+            </div>
+            
+            <h3>2. Провалы в дизайне политики</h3>
+            <ul>
+                <li><span class="highlight">Эффекты по умолчанию</span> - автоматическая регистрация в пенсионных планах</li>
+                <li><span class="highlight">Подталкивание (Nudging)</span> - малые изменения в архитектуре выбора</li>
+            </ul>
+        </div>
+
+        <!-- Slide 10: Policy Implications -->
+        <div class="slide">
+            <h2>Последствия для политики</h2>
+            <h3>Поведенческая государственная политика</h3>
+            <div class="comparison-grid">
+                <div class="comparison-item behavioral">
+                    <h4>Успешные вмешательства:</h4>
+                    <ul>
+                        <li>Автоматическая регистрация в пенсионных программах</li>
+                        <li>Упрощенные формы для госуслуг</li>
+                        <li>Социальные сравнения в энергосбережении</li>
+                    </ul>
+                </div>
+                <div class="comparison-item traditional">
+                    <h4>Традиционные подходы:</h4>
+                    <ul>
+                        <li>Полагаются только на экономические стимулы</li>
+                        <li>Предполагают рациональную обработку информации</li>
+                        <li>Игнорируют психологические факторы</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="example-box">
+                <p><strong>Результат:</strong> Участие в пенсионных программах выросло с 40% до 85% благодаря автоматической регистрации</p>
+            </div>
+        </div>
+
+        <!-- Slide 11: Future Directions -->
+        <div class="slide">
+            <h2>Будущие направления</h2>
+            <h3>Теоретические вызовы:</h3>
+            <ul>
+                <li><span class="highlight">Баланс</span> между математической элегантностью и психологической реалистичностью</li>
+                <li><span class="highlight">Междисциплинарная интеграция</span> психологии, нейронауки, социологии</li>
+                <li><span class="highlight">Методологический плюрализм</span> - различные подходы для разных вопросов</li>
+            </ul>
+            
+            <h3>Области для исследований:</h3>
+            <ul>
+                <li>Кросс-культурная валидация поведенческих находок</li>
+                <li>Индивидуальные различия в восприимчивости к предрассудкам</li>
+                <li>Динамические взаимодействия психологии и рыночных институтов</li>
+            </ul>
+        </div>
+
+        <!-- Slide 12: Conclusion -->
+        <div class="slide">
+            <h2>Заключение</h2>
+            <div class="example-box">
+                <h3>Основные выводы:</h3>
+                <ul>
+                    <li>Традиционные модели <span class="highlight">систематически искажают</span> человеческое поведение</li>
+                    <li>Поведенческие подходы обеспечивают <span class="highlight">лучшую предсказательную силу</span></li>
+                    <li>Психологические факторы имеют <span class="highlight">существенные политические последствия</span></li>
+                </ul>
+            </div>
+            
+            <h3>Будущее экономики:</h3>
+            <p>Необходимость развития более реалистичных моделей, учитывающих человеческую психологию, сохраняя при этом аналитическую строгость</p>
+            
+            <div class="example-box">
+                <p><strong>Практическая значимость:</strong> Экономические модели влияют на политические решения, затрагивающие миллионы жизней. Понимание ограничений - практическая необходимость для эффективного управления</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" onclick="previousSlide()">← Назад</button>
+        <button class="btn" onclick="nextSlide()">Вперед →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(index) {
+            slides.forEach(slide => slide.classList.remove('active'));
+            slides[index].classList.add('active');
+            document.getElementById('current-slide').textContent = index + 1;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides - 1) {
+                currentSlide++;
+                showSlide(currentSlide);
+            }
+        }
+
+        function previousSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                showSlide(currentSlide);
+            }
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft') {
+                previousSlide();
+            }
+        });
+
+        // Touch/swipe support for mobile
+        let startX = 0;
+        let endX = 0;
+
+        document.addEventListener('touchstart', function(e) {
+            startX = e.changedTouches[0].screenX;
+        });
+
+        document.addEventListener('touchend', function(e) {
+            endX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+
+        function handleSwipe() {
+            const threshold = 50;
+            const diff = startX - endX;
+            
+            if (Math.abs(diff) > threshold) {
+                if (diff > 0) {
+                    nextSlide(); // Swipe left - next slide
+                } else {
+                    previousSlide(); // Swipe right - previous slide
+                }
+            }
+        }
+    </script>
+</body>
+</html>
