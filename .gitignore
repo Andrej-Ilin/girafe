@@ -1,3 +1,4 @@
 Geometrci_DL/mnist_rotation_new/*.amat
 Geometrci_DL/mnist_rotation_new.zip
 *.amat
+Geometrci_DL/raw/train.pickle
